@@ -48,7 +48,7 @@ jobs:
           toolchain: nightly
           target: ${{ matrix.target }}
           args: "--locked --release --bin get-ipv6-with-pd-wrt -Z build-std=panic_abort,std"
-          strip: true
+          use-rust-cache: false
 
       - name: Prepare assets
         shell: bash
