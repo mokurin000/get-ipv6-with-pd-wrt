@@ -33,12 +33,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # fix revision count
-      
-      - name: Download rust-src
-        shell: bash
-        if: ${{ matrix.platform }} == "linux-x86_64"
-        run: |
-          rustup component add rust-src
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
@@ -47,7 +41,7 @@ jobs:
         with:
           toolchain: nightly
           target: ${{ matrix.target }}
-          args: "--locked --release --bin get-ipv6-with-pd-wrt -Z build-std=panic_abort,std"
+          args: "--locked --release --bin get-ipv6-with-pd-wrt
           use-rust-cache: false
 
       - name: Prepare assets
