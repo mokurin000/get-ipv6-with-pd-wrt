@@ -36,8 +36,8 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          prefix-key: ${{ matrix.target }}-main
-          save-if: ${{ github.ref == 'refs/heads/main' }}
+          prefix-key: ${{ matrix.target }}-master
+          save-if: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
