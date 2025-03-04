@@ -1,0 +1,9 @@
+[package]
+name = "get-ipv6-with-pd-wrt"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[target.'cfg(all(target_os = "linux", target_env = "gnu"))'.dependencies]
+std = { package = "eyra", version = "0.20.0" }
