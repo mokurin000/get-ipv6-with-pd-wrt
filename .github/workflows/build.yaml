@@ -34,17 +34,14 @@ jobs:
         with:
           fetch-depth: 0 # fix revision count
 
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: ${{ matrix.target }}-master
-          save-if: ${{ github.ref == 'refs/heads/master' }}
-
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
+        env:
+          RUSTFLAGS: "-Zlocation-detail=none"
         with:
           toolchain: nightly
           target: ${{ matrix.target }}
-          args: "--locked --release --bin get-ipv6-with-pd-wrt -Z build-std=panic_abort,std"
+          args: "--locked --release --bin get-ipv6-with-pd-wrt
           strip: true
 
       - name: Prepare assets
