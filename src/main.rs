@@ -1,4 +1,4 @@
-use std::{env::args, error::Error, net::Ipv6Addr, str::FromStr};
+use std::{env, error::Error, net::Ipv6Addr, str::FromStr};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let pd_prefix;
@@ -22,10 +22,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let pd_ip = Ipv6Addr::from_str(pd_prefix.trim())?;
 
-    let ipv6_suffix = args()
-        .nth(1)
-        .expect(&format!("usage: {} <ipv6_suffix>", args().nth(0).unwrap()));
-    let suffix_ip = Ipv6Addr::from_str(&ipv6_suffix)?;
+    let suffix_ip = Ipv6Addr::from_str(&env::var("IPV6_SUFFIX")?)?;
 
     let result = pd_ip.to_bits() | suffix_ip.to_bits();
     println!("{}", Ipv6Addr::from_bits(result));
