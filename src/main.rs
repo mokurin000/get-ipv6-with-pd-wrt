@@ -17,7 +17,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .spawn()?
             .wait_with_output()?
             .stdout;
-        pd_prefix = String::from_utf8_lossy(&output);
+        pd_prefix = String::from_utf8_lossy(&output).to_string();
     }
 
     let pd_ip = Ipv6Addr::from_str(pd_prefix.trim())?;
