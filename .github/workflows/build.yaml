@@ -28,11 +28,6 @@ jobs:
             os: ubuntu-latest
             bin: get-ipv6-with-pd-wrt
 
-          - platform: linux-riscv64
-            target: riscv64gc-unknown-linux-musl
-            os: ubuntu-latest
-            bin: get-ipv6-with-pd-wrt
-            
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -48,7 +43,7 @@ jobs:
         uses: houseabsolute/actions-rust-cross@v0
         with:
           target: ${{ matrix.target }}
-          args: "--locked --release --bin get-ipv6-with-pd-wrt"
+          args: "--locked --release --bin get-ipv6-with-pd-wrt -Z build-std=panic_abort,std"
           strip: true
 
       - name: Prepare assets
