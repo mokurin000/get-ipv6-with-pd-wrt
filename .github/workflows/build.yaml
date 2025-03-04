@@ -42,7 +42,6 @@ jobs:
           toolchain: nightly
           target: ${{ matrix.target }}
           args: "--locked --release --bin get-ipv6-with-pd-wrt"
-          use-rust-cache: false
 
       - name: Prepare assets
         shell: bash
