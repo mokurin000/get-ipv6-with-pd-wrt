@@ -1,7 +1,7 @@
 use std::{error::Error, net::Ipv6Addr, str::FromStr};
 
 use argh::FromArgs;
-use get_ipv6_with_pd_wrt::get_ipv6_pd_from_ubus;
+use ipv6_addr_merge::get_ipv6_pd_from_ubus;
 
 #[derive(FromArgs)]
 #[argh(description = "main CLI interface")]
