@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ linux-x86_64, linux-arm64, linux-armv7l,  ]
+        platform: [ linux-x86_64, linux-arm64, linux-armv6,  ]
         include:
           - platform: linux-x86_64
             target: x86_64-unknown-linux-musl
