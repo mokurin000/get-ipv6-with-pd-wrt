@@ -1,28 +1,31 @@
-use std::{env, error::Error, net::Ipv6Addr, process::Stdio, str::FromStr};
+use std::{error::Error, net::Ipv6Addr, str::FromStr};
 
-use serde_json::Value;
+use argh::FromArgs;
+use get_ipv6_with_pd_wrt::get_ipv6_pd_from_ubus;
+
+#[derive(FromArgs)]
+#[argh(description = "main CLI interface")]
+struct Cli {
+    #[argh(
+        option,
+        description = "specify a prefix, rather than getting from IPv6-PD"
+    )]
+    prefix: Option<String>,
+    #[argh(option, description = "suffix to merge")]
+    suffix: String,
+}
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let output = std::process::Command::new("/bin/ubus")
-        .arg("call")
-        .arg("network.interface.wan_6")
-        .arg("status")
-        .stdout(Stdio::piped())
-        .spawn()?
-        .wait_with_output()?
-        .stdout;
+    let Cli { prefix, suffix } = argh::from_env();
+    let prefix_ip = if let Some(prefix) = prefix {
+        Ipv6Addr::from_str(&prefix)?
+    } else {
+        get_ipv6_pd_from_ubus()?
+    };
 
-    let result_json: Value = serde_json::from_slice(&output)?;
-    let prefix = result_json
-        .pointer("/ipv6-prefix/0/address")
-        .ok_or("failed to parse delegated prefix")?
-        .as_str()
-        .ok_or("delegated prefix must be string")?;
+    let suffix_ip = Ipv6Addr::from_str(&suffix)?;
 
-    let pd_ip = Ipv6Addr::from_str(&prefix)?;
-    let suffix_ip = Ipv6Addr::from_str(&env::var("IPV6_SUFFIX")?)?;
-
-    let result = pd_ip.to_bits() | suffix_ip.to_bits();
+    let result = prefix_ip.to_bits() | suffix_ip.to_bits();
     println!("{}", Ipv6Addr::from_bits(result));
 
     Ok(())

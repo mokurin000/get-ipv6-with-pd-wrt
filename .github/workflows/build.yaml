@@ -50,8 +50,6 @@ jobs:
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
-        env:
-          RUSTFLAGS: "-Zlocation-detail=none"
         with:
           toolchain: nightly
           target: ${{ matrix.target }}
