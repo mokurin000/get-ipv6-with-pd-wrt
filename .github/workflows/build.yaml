@@ -28,8 +28,8 @@ jobs:
             os: ubuntu-latest
             bin: get-ipv6-with-pd-wrt
             
-          - platform: linux-armv7l
-            target: armv7l-unknown-linux-musl
+          - platform: linux-armv6
+            target: arm-unknown-linux-musleabi
             os: ubuntu-latest
             bin: get-ipv6-with-pd-wrt
 
